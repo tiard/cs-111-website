@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content">
+  <h1 class="title is-3">Profile</h1>
+
+  <h2 class="title is-4">SSH Keys</h2>
+</div>
+
+{% if keys %}
+<table class="table is-narrow">
+  <thead>
+    <tr>
+      <th>Fingerprint</th>
+      <th>Comment</th>
+      <th>
+	<span class="icon">
+	  <i class="fas fa-cog"></i>
+	</span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for key in keys %}
+    <tr>
+      <td>{{ key.fingerprint }}</td>
+      <td>{{ key.comment }}</td>
+      <td>
+	<a href="{% url 'ssh:remove' key.id %}">
+	  <span class="icon has-text-danger">
+	    <i class="fas fa-trash"></i>
+	  </span>
+	</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No keys added yet.</p>
+{% endif %}
+
+<div class="content">
+  <div class="buttons">
+    <a class="button is-success" href="{% url 'ssh:add-file' %}">New SSH Key (File Upload)</a>
+    <a class="button is-success"  href="{% url 'ssh:add-text' %}">New SSH Key (Text Input)</a>
+  </div>
+</div>
+
+{% endblock %}

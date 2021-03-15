@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content">
+  <h1 class="title is-3">New SSH Key (File Upload)</h1>
+
+  <form role="form" enctype="multipart/form-data" method="post" action="{% url 'ssh:add-file' %}">
+    {% csrf_token %}
+
+    <div class="field">
+      <div id="add-file" class="file has-name">
+	<label class="file-label">
+	  <input id="{{ form.file.id_for_label }}" name="{{ form.file.html_name }}" class="file-input" type="file">
+	  <span class="file-cta">
+	    <span class="file-icon">
+              <i class="fas fa-upload"></i>
+	    </span>
+	    <span class="file-label">
+              Browse...
+	    </span>
+	  </span>
+	  <span class="file-name">
+	    No file uploaded
+	  </span>
+	</label>
+      </div>
+      {% for error in form.file.errors %}
+      <p class="help is-danger">{{ error }}</p>
+      {% endfor %}
+      {% for error in form.non_field_errors %}
+      <p class="help is-danger">{{ error }}</p>
+      {% endfor %}
+    </div>
+
+    <div class="field">
+      <div class="control">
+	<input class="button is-primary" type="submit" value="Upload">
+      </div>
+    </div>
+  </form>
+
+  <script>
+    const fileInput = document.querySelector('#add-file input[type=file]');
+    fileInput.onchange = () => {
+      if (fileInput.files.length > 0) {
+        const fileName = document.querySelector('#add-file .file-name');
+        fileName.textContent = fileInput.files[0].name;
+      }
+    }
+  </script>
+
+</div>
+{% endblock %}

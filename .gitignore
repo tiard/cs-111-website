@@ -1,0 +1,7 @@
+__pycache__/
+/.sass-cache/
+/cs111/django/static/
+/venv/
+/website/media/
+/website/static/
+/db.sqlite3

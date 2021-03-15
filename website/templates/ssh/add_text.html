@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content">
+  <h1 class="title is-3">New SSH Key (Text Input)</h1>
+
+  <div class="columns">
+    <div class="column is-half">
+
+      <form role="form" enctype="multipart/form-data" method="post" action="{% url 'ssh:add-text' %}">
+	{% csrf_token %}
+
+	<div class="field">
+	  <div class="control">
+	    <textarea id="{{ form.body.id_for_label }}"
+		      name="{{ form.body.html_name }}"
+		      class="textarea"
+		      placeholder="{{ form.body.label }}">
+	    </textarea>
+	  </div>
+	  {% for error in form.body.errors %}
+	  <p class="help is-danger">{{ error }}</p>
+	  {% endfor %}
+	  {% for error in form.non_field_errors %}
+	  <p class="help is-danger">{{ error }}</p>
+	  {% endfor %}
+	</div>
+
+	<div class="field">
+	  <div class="control">
+	    <input id="{{ form.comment.id_for_label }}"
+		   name="{{ form.comment.html_name }}"
+		   class="input"
+		   type="text"
+		   placeholder="{{ form.comment.label }} (optional)">
+	  </div>
+	  {% for error in form.comment.errors %}
+	  <p class="help is-danger">{{ error }}</p>
+	  {% endfor %}
+	</div>
+
+	<div class="field">
+	  <div class="control">
+	    <input class="button is-primary" type="submit" value="Submit">
+	  </div>
+	</div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

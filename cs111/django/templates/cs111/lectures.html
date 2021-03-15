@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content">
+  <h1 class="title is-3">Lectures</h1>
+</div>
+
+{% if lectures %}
+<table class="table is-narrow">
+  <thead>
+    <tr>
+      <th>Number</th>
+      <th>Title</th>
+      <th>Version</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for lecture in lectures %}
+    <tr>
+      <td>{{ lecture.number }}</td>
+      <td><a href="{{ lecture.pdf.url }}">{{ lecture.title }}</a></td>
+      <td>{{ lecture.version }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="content">
+  <p>No lectures posted yet.</p>
+</div>
+{% endif %}
+{% endblock %}
