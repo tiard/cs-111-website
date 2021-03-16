@@ -4,4 +4,11 @@ __pycache__/
 /venv/
 /website/media/
 /website/static/
-/db.sqlite3
+*.aux
+*.fdb_latexmk
+*.log
+*.pdf
+*.png
+*.sqlite3
+*.synctex
+*.xdv

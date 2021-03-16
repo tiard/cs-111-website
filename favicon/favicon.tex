@@ -1,0 +1,27 @@
+\documentclass[tikz,convert={density=600}]{standalone}
+
+\usepackage{fontspec}
+\usepackage{xcolor}
+
+\usetikzlibrary{calc}
+
+\setsansfont{Overpass}[Scale=MatchLowercase]
+
+\renewcommand{\familydefault}{\sfdefault}
+
+\definecolor{uclablue}{RGB}{39,116,174}
+
+\begin{document}
+
+\pagecolor{uclablue}
+
+\begin{tikzpicture}
+  \node [fill=uclablue,
+         text=white,
+         inner sep=0,
+         minimum height=5.42mm,
+         minimum width=5.42mm]
+    {\bfseries 111};
+\end{tikzpicture}
+
+\end{document}
