@@ -20,3 +20,5 @@ class Command(BaseCommand):
         last_name = options['last_name']
 
         add_user(username, email, first_name, last_name, Role.TA)
+
+        self.stdout.write(self.style.SUCCESS(f'Added TA "{username}"'))
