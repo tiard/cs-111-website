@@ -21,4 +21,11 @@ def resources(request):
         syllabus = File.objects.get(file='cs111/syllabus.pdf')
     except File.DoesNotExist:
         syllabus = None
-    return render(request, 'cs111/resources.html', {'syllabus': syllabus})
+    try:
+        vm = File.objects.get(file='cs111/vm.ova')
+    except File.DoesNotExist:
+        vm = None
+    return render(request, 'cs111/resources.html', {
+        'syllabus': syllabus,
+        'vm': vm,
+    })
