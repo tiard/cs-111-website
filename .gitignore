@@ -4,6 +4,7 @@ __pycache__/
 /venv/
 /website/media/
 /website/static/
+/settings.py
 *.aux
 *.fdb_latexmk
 *.log
