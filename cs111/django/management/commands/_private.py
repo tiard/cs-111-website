@@ -4,6 +4,12 @@ from django.contrib.auth.models import User
 from cs111.django.models import Role
 
 def add_user(username, email, first_name, last_name, role):
+    try:
+        User.objects.get(username=username)
+        return False
+    except User.DoesNotExist:
+        pass
+    return False
     password = User.objects.make_random_password(length=16)
     user = User.objects.create_user(
         username,
@@ -31,3 +37,4 @@ Jon''',
         [email],
         fail_silently=False,
     )
+    return True

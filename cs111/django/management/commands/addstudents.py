@@ -53,6 +53,7 @@ class Command(BaseCommand):
             assert username not in usernames
             usernames.add(username)
 
-            add_user(username, email, first_name, last_name, Role.STUDENT)
-
-            self.stdout.write(self.style.SUCCESS(f'Added student "{username}"'))
+            if add_user(username, email, first_name, last_name, Role.STUDENT):
+                self.stdout.write(self.style.SUCCESS(f'Added student "{username}"'))
+            else:
+                self.stdout.write(self.style.WARNING(f'Student exists "{username}"'))
