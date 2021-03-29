@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from django.views import generic
 
-from .models import File, Lecture
+from .models import File, Lab, Lecture
 
 class LecturesView(generic.ListView):
     template_name = 'cs111/lectures.html'
@@ -9,6 +9,13 @@ class LecturesView(generic.ListView):
 
     def get_queryset(self):
         return Lecture.objects.order_by('number')
+
+class LabsView(generic.ListView):
+    template_name = 'cs111/labs.html'
+    context_object_name = 'labs'
+
+    def get_queryset(self):
+        return Lab.objects.order_by('number')
 
 def index(request):
     return render(request, 'cs111/index.html', {})
