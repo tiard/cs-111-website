@@ -9,6 +9,10 @@
     If you're a student you should receieve an email to access your Git account on this server.
   </p>
 
+{% verbatim %}{{ if user.is_staff }}{% endverbatim %}
+  <a href="{{ solutions.file.url }}">Solutions</a>
+{% verbatim %}{{ endif }}{% endverbatim %}
+
   <h2 class="title is-4">Information</h2>
 
   <p>
