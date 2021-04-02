@@ -32,7 +32,12 @@ def resources(request):
         vm = File.objects.get(file='cs111/vm.ova')
     except File.DoesNotExist:
         vm = None
+    try:
+        vm_no_gui = File.objects.get(file='cs111/vm-no-gui.ova')
+    except File.DoesNotExist:
+        vm_no_gui = None
     return render(request, 'cs111/resources.html', {
         'syllabus': syllabus,
         'vm': vm,
+        'vm_no_gui': vm_no_gui,
     })

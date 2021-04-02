@@ -11,6 +11,9 @@
     {% if vm %}
     <li><a href="{{ vm.file.url }}">Virtual machine</a></li>
     {% endif %}
+    {% if vm_no_gui %}
+    <li><a href="{{ vm_no_gui.file.url }}">Virtual machine (no GUI)</a></li>
+    {% endif %}
     <li><a href="https://piazza.com/ucla/spring2021/cs111/">Piazza</a></li>
     <li>
       "<a href="https://pages.cs.wisc.edu/~remzi/OSTEP/">Operating Systems: Three Easy Pieces</a>"
