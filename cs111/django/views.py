@@ -18,13 +18,7 @@ class LabsView(generic.ListView):
         return Lab.objects.order_by('number')
 
 def index(request):
-    try:
-        solutions = File.objects.get(file='cs111/solutions.pdf')
-    except File.DoesNotExist:
-        solutions = None
-    return render(request, 'cs111/index.html', {
-        'solutions': solutions,
-    })
+    return render(request, 'cs111/index.html', {})
 
 def labs(request):
     return render(request, 'cs111/labs.html', {})
