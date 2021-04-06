@@ -16,6 +16,7 @@ class Lecture(models.Model):
     version = models.CharField(max_length=255)
     pdf = models.FileField(upload_to='cs111/lectures', storage=OverwriteFileSystemStorage)
     youtube = models.URLField(blank=True)
+    youtube2 = models.URLField(blank=True)
 
     def __str__(self):
         return f'{self.title} (Lecture {self.number})'
