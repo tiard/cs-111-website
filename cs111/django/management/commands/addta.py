@@ -20,6 +20,6 @@ class Command(BaseCommand):
         last_name = options['last_name']
 
         if add_user(username, email, first_name, last_name, Role.TA):
-                self.stdout.write(self.style.SUCCESS(f'Added TA "{username}"'))
-            else:
-                self.stdout.write(self.style.WARNING(f'TA exists "{username}"'))
+            self.stdout.write(self.style.SUCCESS(f'Added TA "{username}"'))
+        else:
+            self.stdout.write(self.style.WARNING(f'TA exists "{username}"'))
