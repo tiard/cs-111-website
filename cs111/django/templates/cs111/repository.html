@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content">
+  <h1 class="title is-3">Repository</h1>
+
+  <p class="is-family-monospace">git clone git@laforge.cs.ucla.edu:{{ repo.path }}</p>
+  
+  <h2 class="title is-4">Pushes</h2>
+</div>
+
+{% if repo.pushes.count %}
+<table class="table is-narrow">
+  <thead>
+    <tr>
+      <th>Refname</th>
+      <th>User</th>
+      <th>Rev</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for push in repo.pushes.all %}
+    <tr>
+      <td>{{ push.refname }}</td>
+      <td>{{ push.user }}</td>
+      <td>{{ push.old_rev|slice:":6" }}..{{ push.new_rev|slice:":6" }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="content">
+  <p>No repository pushes yet.</p>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,7 +1,9 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render
 from django.views import generic
 
 from .models import File, Lab, Lecture
+from django_gitolite.models import Repo
 
 class LecturesView(generic.ListView):
     template_name = 'cs111/lectures.html'
@@ -22,6 +24,12 @@ def index(request):
 
 def labs(request):
     return render(request, 'cs111/labs.html', {})
+
+@login_required
+def repository(request):
+    user = request.user
+    repo = Repo.objects.get(path=f'spring21/{user.username}/cs111')
+    return render(request, 'cs111/repository.html', {'repo': repo})
 
 def resources(request):
     try:
