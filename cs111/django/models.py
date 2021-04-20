@@ -60,7 +60,7 @@ class LabGrade(models.Model):
     grade = models.IntegerField()
 
     def __str__(self):
-        return f'{self.student} - {self.lab}'
+        return f'{self.student} - {self.lab} - Grade: {self.grade} - Late Days: {self.late_days}'
 
     class Meta:
         unique_together = ['student', 'lab']
