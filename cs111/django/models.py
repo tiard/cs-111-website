@@ -50,3 +50,17 @@ class Role(models.Model):
     def __str__(self):
         display = self.get_role_display()
         return f'{self.user} ({display})'
+
+class LabGrade(models.Model):
+    student = models.ForeignKey(Role, on_delete=models.CASCADE,
+                                related_name='lab_grades')
+    lab = models.ForeignKey(Lab, on_delete=models.CASCADE)
+    commit_id = models.CharField(max_length=40)
+    late_days = models.IntegerField()
+    grade = models.IntegerField()
+
+    def __str__(self):
+        return f'{self.student} - {self.lab}'
+
+    class Meta:
+        unique_together = ['student', 'lab']

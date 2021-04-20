@@ -5,7 +5,38 @@
   <h1 class="title is-3">Repository</h1>
 
   <p class="is-family-monospace">git clone git@laforge.cs.ucla.edu:{{ repo.path }}</p>
+
+  <h2 class="title is-4">Lab Grades</h2>
+</div>
+
+{% if lab_grades.count %}
+<table class="table is-narrow">
+  <thead>
+    <tr>
+      <th>Lab</th>
+      <th>Commit</th>
+      <th>Late Days</th>
+      <th>Grade</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for lab_grade in lab_grades.all %}
+    <tr>
+      <td>{{ lab_grade.lab }}</td>
+      <td>{{ lab_grade.commit_id }}</td>
+      <td>{{ lab_grade.late_days }}</td>
+      <td>{{ lab_grade.grade }}/100</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="content">
+  <p>No lab grades yet.</p>
+</div>
+{% endif %}
   
+<div class="content">
   <h2 class="title is-4">Pushes</h2>
 </div>
 
