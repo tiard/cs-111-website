@@ -19,16 +19,22 @@ class Command(BaseCommand):
         for row in reader:
             username = row[0]
             commit_id = row[1]
-            grade = int(row[2])
+            try:
+                grade = int(row[2])
+            except ValueError:
+                continue
             late_days = int(row[3])
 
             user = User.objects.get(username=username)
             student = user.role
 
-            LabGrade.objects.create(
-                student=student,
-                lab=lab,
-                commit_id=commit_id,
-                late_days=late_days,
-                grade=grade,
-            )
+            try:
+                LabGrade.objects.create(
+                    student=student,
+                    lab=lab,
+                    commit_id=commit_id,
+                    late_days=late_days,
+                    grade=grade,
+                )
+            except Exception as e:
+                print(e)
