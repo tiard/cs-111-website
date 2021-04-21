@@ -38,7 +38,7 @@ class Command(BaseCommand):
                 },
             )
             if not created:
-                lab_grade.commit_id = commit_id,
-                lab_grade.late_days = late_days,
-                lab_grade.grade = grade,
+                lab_grade.commit_id = commit_id
+                lab_grade.late_days = late_days
+                lab_grade.grade = grade
                 lab_grade.save()
