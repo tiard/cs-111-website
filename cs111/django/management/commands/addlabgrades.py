@@ -28,13 +28,17 @@ class Command(BaseCommand):
             user = User.objects.get(username=username)
             student = user.role
 
-            try:
-                LabGrade.objects.create(
-                    student=student,
-                    lab=lab,
-                    commit_id=commit_id,
-                    late_days=late_days,
-                    grade=grade,
-                )
-            except Exception as e:
-                print(e)
+            lab_grade, created = LabGrade.objects.get_or_create(
+                student=student,
+                lab=lab,
+                defaults={
+                    'commit_id': commit_id,
+                    'late_days': late_days,
+                    'grade': grade,
+                },
+            )
+            if not created:
+                lab_grade.commit_id = commit_id,
+                lab_grade.late_days = late_days,
+                lab_grade.grade = grade,
+                lab_grade.save()
