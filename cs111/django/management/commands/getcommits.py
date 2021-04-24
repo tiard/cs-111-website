@@ -14,7 +14,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         writer = csv.writer(options['csv'])
-        for role in Role.objects.filter(role=Role.STUDENT):
+        for role in Role.objects.filter(role=Role.STUDENT).order_by('user__username'):
             user = role.user
             username = user.username
             path = f'spring21/{username}/cs111'
