@@ -64,3 +64,11 @@ class LabGrade(models.Model):
 
     class Meta:
         unique_together = ['student', 'lab']
+
+class MidtermGrade(models.Model):
+    student = models.OneToOneField(Role, on_delete=models.CASCADE,
+                                   related_name='midterm_grade')
+    grade = models.FloatField()
+
+    def __str__(self):
+        return f'{self.student} - Grade: {self.grade}'

@@ -7,6 +7,28 @@
 
   <p class="is-family-monospace">git clone git@laforge.cs.ucla.edu:{{ repo.path }}</p>
 
+  {% if midterm_grade %}
+  <h2 class="title is-4">Exam Grades</h2>
+</div>
+
+<table class="table is-narrow">
+  <thead>
+    <tr>
+      <th>Exam</th>
+      <th>Grade</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Midterm</td>
+      <td>{{ midterm_grade.grade }}/100</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="content">
+  {% endif %}
+
   <h2 class="title is-4">Lab Grades</h2>
 </div>
 

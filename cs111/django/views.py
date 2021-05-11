@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render
 from django.views import generic
 
-from .models import File, Lab, Lecture, LabGrade
+from .models import File, Lab, Lecture, LabGrade, MidtermGrade
 from django_gitolite.models import Repo
 
 class LecturesView(generic.ListView):
@@ -30,9 +30,17 @@ def repository(request):
     user = request.user
     repo = Repo.objects.get(path=f'spring21/{user.username}/cs111')
     lab_grades = LabGrade.objects.filter(student__user=user).order_by('lab__number')
+    midterm_grade = None
+    try:
+        midterm_grade = MidtermGrade.objects.get(student__user=user)
+    except Exception as e:
+        print(e)
+        print('ok')
+        pass
     return render(request, 'cs111/repository.html', {
         'repo': repo,
         'lab_grades': lab_grades,
+        'midterm_grade': midterm_grade,
     })
 
 def resources(request):
