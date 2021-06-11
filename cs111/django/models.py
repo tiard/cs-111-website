@@ -72,3 +72,11 @@ class MidtermGrade(models.Model):
 
     def __str__(self):
         return f'{self.student} - Grade: {self.grade}'
+
+class FinalExamGrade(models.Model):
+    student = models.OneToOneField(Role, on_delete=models.CASCADE,
+                                   related_name='final_exam_grade')
+    grade = models.FloatField()
+
+    def __str__(self):
+        return f'{self.student} - Grade: {self.grade}'
