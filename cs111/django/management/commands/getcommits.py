@@ -17,6 +17,10 @@ class Command(BaseCommand):
     due_dates = {
       'lab-02':
          datetime.datetime(2021, 5, 10, 20, tzinfo=tz).astimezone(pytz.utc),
+      'lab-03':
+         datetime.datetime(2021, 5, 21, 20, tzinfo=tz).astimezone(pytz.utc),
+      'lab-04':
+         datetime.datetime(2021, 6, 4, 20, tzinfo=tz).astimezone(pytz.utc),
     }
 
     def add_arguments(self, parser):
@@ -38,7 +42,7 @@ class Command(BaseCommand):
             )
             found = False
             for push in pushes:
-                late_days = (push.time - self.due_dates['lab-02']).days + 1
+                late_days = (push.time - self.due_dates[lab]).days + 1
                 late_days = late_days if late_days > 0 else 0
                 for patch in git_repo.diff(push.old_rev, push.new_rev):
                     delta = patch.delta
