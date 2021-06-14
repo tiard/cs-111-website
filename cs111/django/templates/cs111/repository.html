@@ -8,7 +8,7 @@
   <p class="is-family-monospace">git clone git@laforge.cs.ucla.edu:{{ repo.path }}</p>
 
   {% if midterm_grade %}
-  <h2 class="title is-4">Exam Grades</h2>
+  <h2 class="title is-4">Other Grades</h2>
 </div>
 
 <table class="table is-narrow">
@@ -19,6 +19,12 @@
     </tr>
   </thead>
   <tbody>
+    {% if evaluation_grade %}
+    <tr>
+      <td>Evaluation</td>
+      <td>{{ evaluation_grade.grade }}/100</td>
+    </tr>
+    {% endif %}
     <tr>
       <td>Midterm</td>
       <td>{{ midterm_grade.grade }}/100</td>
@@ -27,6 +33,12 @@
       <td>Final exam</td>
       <td>{{ final_exam_grade.grade }}/150</td>
     </tr>
+    {% if course_grade %}
+    <tr>
+      <td>Course</td>
+      <td>{{ course_grade.grade }}/100</td>
+    </tr>
+    {% endif %}
   </tbody>
 </table>
 
