@@ -4,6 +4,12 @@ from django.contrib.auth.models import User
 
 from .storages import OverwriteFileSystemStorage
 
+class Offering(models.Model):
+    slug = models.SlugField()
+
+    def __str__(self):
+        return self.slug
+
 class File(models.Model):
     file = models.FileField(upload_to='cs111', storage=OverwriteFileSystemStorage)
 
@@ -11,6 +17,8 @@ class File(models.Model):
         return str(self.file)
 
 class Lecture(models.Model):
+    offering = models.ForeignKey(Offering, on_delete=models.CASCADE,
+                                 related_name='lectures')
     number = models.SmallIntegerField(blank=True, null=True)
     title = models.CharField(max_length=255)
     version = models.CharField(max_length=255)
@@ -22,6 +30,8 @@ class Lecture(models.Model):
         return f'{self.title} (Lecture {self.number})'
 
 class Lab(models.Model):
+    offering = models.ForeignKey(Offering, on_delete=models.CASCADE,
+                                 related_name='labs')
     number = models.SmallIntegerField(blank=True, null=True)
     title = models.CharField(max_length=255)
     version = models.CharField(max_length=255)
@@ -31,6 +41,8 @@ class Lab(models.Model):
         return f'{self.title} (Lab {self.number})'
 
 class Role(models.Model):
+    offering = models.ForeignKey(Offering, on_delete=models.CASCADE,
+                                 related_name='roles')
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,

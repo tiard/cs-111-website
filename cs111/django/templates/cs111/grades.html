@@ -3,14 +3,10 @@
 
 {% block content %}
 <div class="content">
-  <h1 class="title is-3">Repository</h1>
-
-  <p class="is-family-monospace">git clone git@laforge.cs.ucla.edu:{{ repo.path }}</p>
-
-  {% if midterm_grade %}
-  <h2 class="title is-4">Other Grades</h2>
+  <h1 class="title is-3">Grades</h1>
 </div>
 
+{% if midterm_grade %}
 <table class="table is-narrow">
   <thead>
     <tr>
@@ -19,12 +15,6 @@
     </tr>
   </thead>
   <tbody>
-    {% if evaluation_grade %}
-    <tr>
-      <td>Evaluation</td>
-      <td>{{ evaluation_grade.grade }}/1</td>
-    </tr>
-    {% endif %}
     <tr>
       <td>Midterm</td>
       <td>{{ midterm_grade.grade }}/100</td>
@@ -33,6 +23,12 @@
       <td>Final exam</td>
       <td>{{ final_exam_grade.grade }}/150</td>
     </tr>
+    {% if evaluation_grade %}
+    <tr>
+      <td>Evaluation</td>
+      <td>{{ evaluation_grade.grade }}/1</td>
+    </tr>
+    {% endif %}
     {% if course_grade %}
     <tr>
       <td>Course</td>
@@ -41,11 +37,10 @@
     {% endif %}
   </tbody>
 </table>
+{% endif %}
 
 <div class="content">
-  {% endif %}
-
-  <h2 class="title is-4">Lab Grades</h2>
+  <h2 class="title is-4">Labs</h2>
 </div>
 
 {% if lab_grades.count %}
@@ -74,9 +69,14 @@
   <p>No lab grades yet.</p>
 </div>
 {% endif %}
-  
+
+{% if repo %}
 <div class="content">
-  <h2 class="title is-4">Pushes</h2>
+  <h2 class="title is-4">Repository</h2>
+
+  <p class="is-family-monospace">git clone git@laforge.cs.ucla.edu:{{ repo.path }}</p>
+  
+  <h2 class="title is-5">Pushes</h2>
 </div>
 
 {% if repo.pushes.count %}
@@ -104,5 +104,6 @@
 <div class="content">
   <p>No repository pushes yet.</p>
 </div>
+{% endif %}
 {% endif %}
 {% endblock %}

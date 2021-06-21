@@ -1,8 +1,9 @@
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render
 from django.views import generic
 
-from .models import File, Lecture, Lab, LabGrade, MidtermGrade, FinalExamGrade, EvaluationGrade, CourseGrade
+from .models import Offering, File, Lecture, Lab, LabGrade, MidtermGrade, FinalExamGrade, EvaluationGrade, CourseGrade
 from django_gitolite.models import Repo
 
 class LecturesView(generic.ListView):
@@ -10,14 +11,16 @@ class LecturesView(generic.ListView):
     context_object_name = 'lectures'
 
     def get_queryset(self):
-        return Lecture.objects.order_by('number')
+        offering = Offering.objects.get(slug=settings.CS111_OFFERING)
+        return Lecture.objects.filter(offering=offering).order_by('number')
 
 class LabsView(generic.ListView):
     template_name = 'cs111/labs.html'
     context_object_name = 'labs'
 
     def get_queryset(self):
-        return Lab.objects.order_by('number')
+        offering = Offering.objects.get(slug=settings.CS111_OFFERING)
+        return Lab.objects.filter(offering=offering).order_by('number')
 
 def index(request):
     return render(request, 'cs111/index.html', {})
@@ -26,9 +29,13 @@ def labs(request):
     return render(request, 'cs111/labs.html', {})
 
 @login_required
-def repository(request):
+def grades(request):
     user = request.user
-    repo = Repo.objects.get(path=f'spring21/{user.username}/cs111')
+    offering_slug = settings.CS111_OFFERING
+    try:
+        repo = Repo.objects.get(path=f'{offering_slug}/{user.username}/cs111')
+    except Repo.DoesNotExist:
+        repo = None
     lab_grades = LabGrade.objects.filter(student__user=user).order_by('lab__number')
     midterm_grade = None
     try:
@@ -53,7 +60,7 @@ def repository(request):
         course_grade = CourseGrade.objects.get(student__user=user)
     except Exception as e:
         pass
-    return render(request, 'cs111/repository.html', {
+    return render(request, 'cs111/grades.html', {
         'repo': repo,
         'evaluation_grade': evaluation_grade,
         'lab_grades': lab_grades,

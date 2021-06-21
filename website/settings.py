@@ -88,3 +88,5 @@ LOGIN_REDIRECT_URL = 'ssh:index'
 LOGOUT_REDIRECT_URL = '/'
 
 GITOLITE_USER = 'git'
+
+CS111_OFFERING = 'summer21'
