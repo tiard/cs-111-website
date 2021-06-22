@@ -1,7 +1,8 @@
+from django.conf import settings
 from django.core.mail import send_mail
 
 from django.contrib.auth.models import User
-from cs111.django.models import Role
+from cs111.django.models import Role, Offering
 
 def add_user(username, email, first_name, last_name, role):
     try:
@@ -18,7 +19,8 @@ def add_user(username, email, first_name, last_name, role):
         last_name=last_name
     )
 
-    Role.objects.create(user=user, role=role)
+    offering = Offering.objects.get(slug=settings.CS111_OFFERING)
+    Role.objects.create(user=user, role=role, offering=offering)
 
     send_mail(
         '[cs111] Welcome to Operating System Principles!',
