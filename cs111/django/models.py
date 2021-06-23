@@ -43,6 +43,7 @@ class Lab(models.Model):
 class Role(models.Model):
     offering = models.ForeignKey(Offering, on_delete=models.CASCADE,
                                  related_name='roles')
+    ucla_id = models.IntegerField(blank=True, null=True, unique=True)
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
