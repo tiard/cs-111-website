@@ -50,10 +50,12 @@ class Command(BaseCommand):
                 user_second = ''.join(x.lower() for x in s)
             username = f'{user_first}{user_second}'
 
+            ucla_id = int(row[0].replace('-', ''))
+
             assert username not in usernames
             usernames.add(username)
 
-            if add_user(username, email, first_name, last_name, Role.STUDENT):
+            if add_user(username, email, first_name, last_name, Role.STUDENT, ucla_id=ucla_id):
                 self.stdout.write(self.style.SUCCESS(f'Added student "{username}"'))
             else:
                 self.stdout.write(self.style.WARNING(f'Student exists "{username}"'))
