@@ -1,6 +1,7 @@
+from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 
-from cs111.django.models import Role
+from cs111.django.models import Offering, Role, Lab
 from django_gitolite.models import Repo
 from django_gitolite.utils import home_dir
 
@@ -9,31 +10,24 @@ import csv
 import datetime
 import os
 import pygit2
-import pytz
 
 class Command(BaseCommand):
     help = 'Gets commits from right now'
-    tz = pytz.timezone("America/Los_Angeles")
-    due_dates = {
-      'lab-02':
-         datetime.datetime(2021, 5, 10, 20, tzinfo=tz).astimezone(pytz.utc),
-      'lab-03':
-         datetime.datetime(2021, 5, 21, 20, tzinfo=tz).astimezone(pytz.utc),
-      'lab-04':
-         datetime.datetime(2021, 6, 4, 20, tzinfo=tz).astimezone(pytz.utc),
-    }
 
     def add_arguments(self, parser):
         parser.add_argument('csv', type=argparse.FileType('w'))
-        parser.add_argument('lab', type=str)
+        parser.add_argument('lab_number', type=int)
 
     def handle(self, *args, **options):
         writer = csv.writer(options['csv'])
-        lab = options['lab']
-        for role in Role.objects.filter(role=Role.STUDENT).order_by('user__username'):
+
+        offering = Offering.objects.get(slug=settings.CS111_OFFERING)
+        lab = Lab.objects.get(offering=offering, number=options['lab_number'])
+
+        for role in Role.objects.filter(role=Role.STUDENT, offering=offering).order_by('user__username'):
             user = role.user
             username = user.username
-            path = f'spring21/{username}/cs111'
+            path = f'{offering.slug}/{username}/cs111'
             repo = Repo.objects.get(path=path)
             pushes = repo.pushes.filter(refname='refs/heads/main').order_by('-time')
 
@@ -42,7 +36,7 @@ class Command(BaseCommand):
             )
             found = False
             for push in pushes:
-                late_days = (push.time - self.due_dates[lab]).days + 1
+                late_days = (push.time - lab.due_date).days + 1
                 late_days = late_days if late_days > 0 else 0
                 for patch in git_repo.diff(push.old_rev, push.new_rev):
                     delta = patch.delta

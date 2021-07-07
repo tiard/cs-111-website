@@ -36,6 +36,7 @@ class Lab(models.Model):
     title = models.CharField(max_length=255)
     version = models.CharField(max_length=255)
     pdf = models.FileField(upload_to='cs111/labs', storage=OverwriteFileSystemStorage)
+    due_date = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
         return f'{self.title} (Lab {self.number})'
