@@ -41,7 +41,7 @@ class Command(BaseCommand):
                 for patch in git_repo.diff(push.old_rev, push.new_rev):
                     delta = patch.delta
                     if delta.status == pygit2.GIT_DELTA_ADDED or delta.status == pygit2.GIT_DELTA_MODIFIED:
-                        if delta.new_file.path.startswith(lab):
+                        if delta.new_file.path.startswith(f'lab-{lab.number:02}'):
                             found = True
                             break
                 if found:
