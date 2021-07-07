@@ -24,6 +24,14 @@ class Command(BaseCommand):
         offering = Offering.objects.get(slug=settings.CS111_OFFERING)
         lab = Lab.objects.get(offering=offering, number=options['lab_number'])
 
+        upstream_commits = set()
+        path = f'{offering.slug}/jon/cs111'
+        git_repo = pygit2.Repository(
+            os.path.join(home_dir(), 'repositories', '{}.git'.format(path))
+        )
+        for commit in git_repo.walk(git_repo.head.target, pygit2.GIT_SORT_TOPOLOGICAL):
+            upstream_commits.add(commit.id)
+
         for role in Role.objects.filter(role=Role.STUDENT, offering=offering).order_by('user__username'):
             user = role.user
             username = user.username
@@ -38,14 +46,25 @@ class Command(BaseCommand):
             for push in pushes:
                 late_days = (push.time - lab.due_date).days + 1
                 late_days = late_days if late_days > 0 else 0
-                for patch in git_repo.diff(push.old_rev, push.new_rev):
-                    delta = patch.delta
-                    if delta.status == pygit2.GIT_DELTA_ADDED or delta.status == pygit2.GIT_DELTA_MODIFIED:
-                        if delta.new_file.path.startswith(f'lab-{lab.number:02}'):
-                            found = True
-                            break
+
+                for commit in git_repo.walk(push.new_rev, pygit2.GIT_SORT_TOPOLOGICAL):
+                    if commit.id in upstream_commits:
+                        continue
+                    if str(commit.id) == push.old_rev:
+                        break
+                    if len(commit.parents) != 1:
+                        continue
+
+                    for patch in git_repo.diff(commit.parents[0], commit):
+                        delta = patch.delta
+                        if delta.status == pygit2.GIT_DELTA_ADDED or delta.status == pygit2.GIT_DELTA_MODIFIED:
+                            if delta.new_file.path.startswith(f'lab-{lab.number:02}'):
+                                found = True
+                                break
+                    if found:
+                        writer.writerow([username, commit.id, late_days])
+                        break
                 if found:
-                    writer.writerow([username, push.new_rev, late_days])
                     break
 
             if not found:
