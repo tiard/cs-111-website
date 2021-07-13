@@ -1,7 +1,8 @@
+from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 
 from django.contrib.auth.models import User
-from cs111.django.models import Lab, LabGrade
+from cs111.django.models import Lab, LabGrade, Offering
 
 import argparse
 import csv
@@ -11,11 +12,12 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('csv', type=argparse.FileType('r'))
-        parser.add_argument('lab')
+        parser.add_argument('lab_number', type=int)
 
     def handle(self, *args, **options):
         reader = csv.reader(options['csv'])
-        lab = Lab.objects.get(number=options['lab'])
+        offering = Offering.objects.get(slug=settings.CS111_OFFERING)
+        lab = Lab.objects.get(offering=offering, number=options['lab_number'])
         for row in reader:
             username = row[0]
             commit_id = row[1]
