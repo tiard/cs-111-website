@@ -52,6 +52,7 @@ def update_user(username, ucla_id):
     role.offering = offering
     role.save()
 
+    first_name = role.user.first_name
     send_mail(
         '[cs111] Welcome to Operating System Principles!',
         f'''Hi {first_name},
