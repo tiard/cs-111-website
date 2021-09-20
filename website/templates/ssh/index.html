@@ -25,7 +25,7 @@
   <tbody>
     {% for key in keys %}
     <tr>
-      <td>{{ key.fingerprint }}</td>
+      <td><code>{{ key.fingerprint }}</code></td>
       <td>{{ key.comment }}</td>
       <td>
 	<a href="{% url 'ssh:remove' key.id %}">
