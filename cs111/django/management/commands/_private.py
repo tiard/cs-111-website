@@ -52,4 +52,22 @@ def update_user(username, ucla_id):
 
     role.offering = offering
     role.save()
+
+    send_mail(
+        '[cs111] Welcome to Operating System Principles!',
+        f'''Hi {first_name},
+
+You already have a login for https://laforge.cs.ucla.edu/cs111/.
+
+    Username: {username}
+
+If you need to reset your password please use https://laforge.cs.ucla.edu/cs111/accounts/password_reset/ with this email address.
+
+I'm looking forward to this quarter!
+
+Jon''',
+        None,
+        [email],
+        fail_silently=False,
+    )
     return True
