@@ -3,8 +3,10 @@
 // @import "bulma/sass/utilities/initial-variables";
 // @import "bulma/sass/utilities/functions";
 
-$family-monospace: 'Overpass Mono', monospace;
-$family-sans-serif: 'Overpass', sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro&family=Inter&display=swap');
+
+$family-monospace: 'Anonymous Pro', monospace;
+$family-sans-serif: 'Inter', sans-serif;
 $primary: #2774AE;
 
 // @import "bulma/sass/utilities/derived-variables";

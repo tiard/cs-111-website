@@ -66,6 +66,8 @@ class Role(models.Model):
         return f'{self.user} ({display})'
 
 class LabGrade(models.Model):
+    offering = models.ForeignKey(Offering, on_delete=models.CASCADE,
+                                 related_name='lab_grades')
     student = models.ForeignKey(Role, on_delete=models.CASCADE,
                                 related_name='lab_grades')
     lab = models.ForeignKey(Lab, on_delete=models.CASCADE)
@@ -80,6 +82,8 @@ class LabGrade(models.Model):
         unique_together = ['student', 'lab']
 
 class MidtermGrade(models.Model):
+    offering = models.ForeignKey(Offering, on_delete=models.CASCADE,
+                                 related_name='midterm_grades')
     student = models.OneToOneField(Role, on_delete=models.CASCADE,
                                    related_name='midterm_grade')
     grade = models.FloatField()
@@ -88,6 +92,8 @@ class MidtermGrade(models.Model):
         return f'{self.student} - Grade: {self.grade}'
 
 class FinalExamGrade(models.Model):
+    offering = models.ForeignKey(Offering, on_delete=models.CASCADE,
+                                 related_name='final_exam_grades')
     student = models.OneToOneField(Role, on_delete=models.CASCADE,
                                    related_name='final_exam_grade')
     grade = models.FloatField()
@@ -96,6 +102,8 @@ class FinalExamGrade(models.Model):
         return f'{self.student} - Grade: {self.grade}'
 
 class EvaluationGrade(models.Model):
+    offering = models.ForeignKey(Offering, on_delete=models.CASCADE,
+                                 related_name='evaluation_grades')
     student = models.OneToOneField(Role, on_delete=models.CASCADE,
                                    related_name='evaluation_grade')
     grade = models.FloatField()
@@ -104,6 +112,8 @@ class EvaluationGrade(models.Model):
         return f'{self.student} - Grade: {self.grade}'
 
 class CourseGrade(models.Model):
+    offering = models.ForeignKey(Offering, on_delete=models.CASCADE,
+                                 related_name='course_grades')
     student = models.OneToOneField(Role, on_delete=models.CASCADE,
                                    related_name='course_grade')
     grade = models.FloatField()
