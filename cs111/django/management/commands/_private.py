@@ -40,3 +40,16 @@ Jon''',
         fail_silently=False,
     )
     return True
+
+def update_user(username, ucla_id):
+    offering = Offering.objects.get(slug=settings.CS111_OFFERING)
+
+    try:
+        role = Role.objects.get(user__username=username, ucla_id=ucla_id)
+    except Role.DoesNotExist:
+        assert not Role.objects.filter(ucla_id=ucla_id).exists()
+        return False
+
+    role.offering = offering
+    role.save()
+    return True
