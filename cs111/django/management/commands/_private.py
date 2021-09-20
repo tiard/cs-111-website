@@ -5,11 +5,8 @@ from django.contrib.auth.models import User
 from cs111.django.models import Role, Offering
 
 def add_user(username, email, first_name, last_name, role, ucla_id=None):
-    try:
-        User.objects.get(username=username)
-        return False
-    except User.DoesNotExist:
-        pass
+    assert not User.objects.filter(username=username).exists()
+
     password = User.objects.make_random_password(length=16)
     user = User.objects.create_user(
         username,
@@ -39,7 +36,6 @@ Jon''',
         [email],
         fail_silently=False,
     )
-    return True
 
 def update_user(username, ucla_id):
     offering = Offering.objects.get(slug=settings.CS111_OFFERING)
@@ -49,6 +45,9 @@ def update_user(username, ucla_id):
     except Role.DoesNotExist:
         assert not Role.objects.filter(ucla_id=ucla_id).exists()
         return False
+
+    if role.offering == offering:
+        return True
 
     role.offering = offering
     role.save()
