@@ -3,9 +3,10 @@
 // @import "bulma/sass/utilities/initial-variables";
 // @import "bulma/sass/utilities/functions";
 
-@import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro&family=Inter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/hack.css');
 
-$family-monospace: 'Anonymous Pro', monospace;
+$family-monospace: 'Hack', monospace;
 $family-sans-serif: 'Inter', sans-serif;
 $primary: #2774AE;
 
