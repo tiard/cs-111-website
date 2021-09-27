@@ -8,6 +8,12 @@
     {% if syllabus %}
     <li><a href="{{ syllabus.file.url }}">Syllabus</a></li>
     {% endif %}
+    {% if vm %}
+    <li><a href="{{ vm.file.url }}">Virtual machine</a></li>
+    {% endif %}
+    {% if vm_no_gui %}
+    <li><a href="{{ vm_no_gui.file.url }}">Virtual machine (no GUI)</a></li>
+    {% endif %}
     <li>
       "<a href="https://pages.cs.wisc.edu/~remzi/OSTEP/">Operating Systems: Three Easy Pieces</a>"
       by <a href="http://www.cs.wisc.edu/~remzi/">Remzi Arpaci-Dusseau</a>
