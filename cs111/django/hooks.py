@@ -82,4 +82,6 @@ def update_status(push):
         submission_status, created = SubmissionStatus.objects.get_or_create(
             repo=repo, lab=lab, defaults={'is_modified': is_modified}
         )
-        pass
+        if not created:
+            submission_status.is_modified = is_modified
+            submission_status.save()
