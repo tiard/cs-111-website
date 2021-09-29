@@ -109,7 +109,7 @@
     <tr>
       <th>Refname</th>
       <th>User</th>
-      <th>Rev</th>
+      <th>New Revision</th>
       <th>Date</th>
     </tr>
   </thead>
@@ -118,7 +118,7 @@
     <tr>
       <td>{{ push.refname }}</td>
       <td>{{ push.user }}</td>
-      <td>{{ push.old_rev|slice:":6" }}..{{ push.new_rev|slice:":6" }}</td>
+      <td>{{ push.new_rev }}</td>
       <td>{% timezone "America/Los_Angeles" %}{{ push.time }}{% endtimezone %}</td>
     </tr>
   {% endfor %}
