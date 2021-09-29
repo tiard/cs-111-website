@@ -90,5 +90,8 @@ LOGIN_REDIRECT_URL = 'ssh:index'
 LOGOUT_REDIRECT_URL = '/'
 
 GITOLITE_USER = 'git'
+GITOLITE_HOOKS = (
+	'cs111.django.hooks.update_status',
+)
 
 CS111_OFFERING = 'fall21'

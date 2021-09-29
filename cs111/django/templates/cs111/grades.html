@@ -75,7 +75,31 @@
   <h2 class="title is-4">Repository</h2>
 
   <p class="is-family-monospace">git clone git@laforge.cs.ucla.edu:{{ repo.path }}</p>
+
+  {% if repo.upstream_status or repo.submission_statuses.count %}
+  <h2 class="title is-5">Status</h2>
+</div>
+
+<table class="table is-narrow">
+  <tbody>
+  {% if repo.upstream_status %}
+    <tr>
+      <td>Upstream</td>
+      <td>{% if repo.upstream_status.is_merged %}<span class="has-text-success">Merged</span>{% else %}<span class="has-text-danger">Not merged</span>{% endif %}</td>
+    </tr>
+  {% endif %}
+  {% for submission_status in repo.submission_statuses.all %}
+    <tr>
+      <td>Lab {{ submission_status.lab.number }}</td>
+      <td>{% if submission_status.is_modified %}<span class="has-text-success">Modified</span>{% else %}<span class="has-text-danger">Not modified</span>{% endif %}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
   
+<div class="content">
+  {% endif %}
+
   <h2 class="title is-5">Pushes</h2>
 </div>
 

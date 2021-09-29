@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Offering, File, Lecture, Lab, Role, LabGrade, MidtermGrade, FinalExamGrade, EvaluationGrade, CourseGrade
+from .models import *
 
 admin.site.register(Offering)
 admin.site.register(File)
@@ -12,3 +12,5 @@ admin.site.register(MidtermGrade)
 admin.site.register(FinalExamGrade)
 admin.site.register(EvaluationGrade)
 admin.site.register(CourseGrade)
+admin.site.register(UpstreamStatus)
+admin.site.register(SubmissionStatus)

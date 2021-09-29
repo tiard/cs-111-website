@@ -1,6 +1,7 @@
 from django.db import models
 
 from django.contrib.auth.models import User
+from django_gitolite.models import Repo
 
 from .storages import OverwriteFileSystemStorage
 
@@ -120,3 +121,24 @@ class CourseGrade(models.Model):
 
     def __str__(self):
         return f'{self.student} - Grade: {self.grade}'
+
+class UpstreamStatus(models.Model):
+    repo = models.OneToOneField(Repo, on_delete=models.CASCADE,
+                                related_name='upstream_status')
+    is_merged = models.BooleanField()
+
+    def __str__(self):
+        return str(self.repo)
+
+class SubmissionStatus(models.Model):
+    repo = models.ForeignKey(Repo, on_delete=models.CASCADE,
+                             related_name='submission_statuses')
+    lab = models.ForeignKey(Lab, on_delete=models.CASCADE,
+                            related_name='submission_statuses')
+    is_modified = models.BooleanField()
+
+    def __str__(self):
+        return f'{self.repo} - {self.lab}'
+
+    class Meta:
+        unique_together = ['repo', 'lab']
