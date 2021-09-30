@@ -14,7 +14,8 @@ def update_status(push):
     offering_slug = settings.CS111_OFFERING
     offering = Offering.objects.get(slug=offering_slug)
 
-    repo_path = push.repo.path
+    repo = push.repo
+    repo_path = repo.path
     upstream_repo_path = f'{offering_slug}/jon/cs111'
     if repo_path == upstream_repo_path:
         for role in Role.objects.filter(offering=offering, role=Role.STUDENT):
