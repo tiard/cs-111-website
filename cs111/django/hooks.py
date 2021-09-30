@@ -40,7 +40,7 @@ def update_status(push):
         return
 
     try:
-        role = Role.objects.get(offering=offering, role=Role.Student, user__username=parts[1])
+        role = Role.objects.get(offering=offering, role=Role.STUDENT, user__username=parts[1])
     except Role.DoesNotExist:
         return
 
