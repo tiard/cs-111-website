@@ -70,7 +70,7 @@ def update_status(push):
         return
 
     result = subprocess.run(sudo_cmd + ['git', 'diff', '--name-status', latest_commit, push.new_rev],
-                            cwd=git_path, capture_output=True)
+                            cwd=git_path, capture_output=True, text=True)
     labs_modified = set()
     for line in result.stdout.splitlines():
         s, p = line.split('\t')
