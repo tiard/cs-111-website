@@ -54,10 +54,12 @@ class Role(models.Model):
     INSTRUCTOR = 'I'
     TA = 'T'
     STUDENT = 'S'
+    AUDIT = 'A'
     ROLE_CHOICES = [
         (INSTRUCTOR, 'Instructor'),
         (TA, 'TA'),
         (STUDENT, 'Student'),
+        (AUDIT, 'Audit'),
     ]
     role = models.CharField(
         max_length=1, choices=ROLE_CHOICES)
