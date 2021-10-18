@@ -4,11 +4,12 @@ import os
 import subprocess
 
 from django.conf import settings
+from django.contrib.auth.models import User
 
 from django_gitolite.models import Repo
 from django_gitolite.utils import home_dir
 
-from cs111.django.models import Lab, Offering, Role, SubmissionStatus, UpstreamStatus
+from cs111.django.models import Lab, LabGrade, Offering, Role, SubmissionStatus, UpstreamStatus
 
 logger = logging.getLogger(__name__)
 
