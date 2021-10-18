@@ -1,3 +1,4 @@
+import csv
 import logging
 import os
 import subprocess
@@ -5,10 +6,66 @@ import subprocess
 from django.conf import settings
 
 from django_gitolite.models import Repo
+from django_gitolite.utils import home_dir
 
 from cs111.django.models import Lab, Offering, Role, SubmissionStatus, UpstreamStatus
 
 logger = logging.getLogger(__name__)
+
+def update_grades(push):
+    offering_slug = settings.CS111_OFFERING
+    offering = Offering.objects.get(slug=offering_slug)
+
+    repo = push.repo
+    repo_path = repo.path
+
+    git_path = os.path.join(home_dir(), 'repositories', f'{repo_path}.git')
+
+    sudo_cmd = ['sudo', '-n', '-u', settings.GITOLITE_USER]
+
+    for n in range(5):
+        try:
+            lab = Lab.objects.get(offering=offering, number=n)
+        except Lab.DoesNotExist:
+            continue
+
+        result = subprocess.run(sudo_cmd + ['git', 'show', f'{push.new_rev}:lab{n}-grades.csv'], cwd=git_path, capture_output=True, text=True)
+        if result.returncode != 0:
+            continue
+        reader = csv.reader(result.stdout.splitlines())
+        for row in reader:
+            username = row[0]
+            commit_id = row[1]
+            late_days = row[2]
+            grade = row[3]
+
+            try:
+                user = User.objects.get(username=username)
+            except User.DoesNotExist:
+                print(f'{username} user does not exist (skipping)')
+                continue
+
+            try:
+                student = user.role
+            except:
+                print(f'{username} student does not exist (skipping)')
+                continue
+
+            lab_grade, created = LabGrade.objects.get_or_create(
+                offering=offering,
+                student=student,
+                lab=lab,
+                defaults={
+                    'commit_id': commit_id,
+                    'late_days': late_days,
+                    'grade': grade,
+                },
+            )
+            if not created:
+                lab_grade.commit_id = commit_id
+                lab_grade.late_days = late_days
+                lab_grade.grade = grade
+                lab_grade.save()
 
 def update_status(push):
     offering_slug = settings.CS111_OFFERING
@@ -32,6 +89,10 @@ def update_status(push):
                 upstream_status.save()
         return
 
+    if repo_path == f'{offering_slug}/jon/cs111-grades' and push.refname == 'refs/heads/main':
+        update_grades(push)
+        return
+
     parts = repo_path.split('/')
     if len(parts) != 3:
         return
@@ -48,7 +109,6 @@ def update_status(push):
     upstream_repo = Repo.objects.get(path=upstream_repo_path)
     latest_commit = upstream_repo.pushes.filter(refname='refs/heads/main').latest('time').new_rev
 
-    from django_gitolite.utils import home_dir
     git_path = os.path.join(home_dir(), 'repositories', f'{repo_path}.git')
 
     sudo_cmd = ['sudo', '-n', '-u', settings.GITOLITE_USER]
