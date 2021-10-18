@@ -19,7 +19,7 @@ class Command(BaseCommand):
         parser.add_argument('lab_number', type=int)
 
     def handle(self, *args, **options):
-        writer = csv.writer(options['csv'])
+        writer = csv.writer(options['csv'], lineterminator='\n')
 
         offering = Offering.objects.get(slug=settings.CS111_OFFERING)
         lab = Lab.objects.get(offering=offering, number=options['lab_number'])
