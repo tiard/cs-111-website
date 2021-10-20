@@ -20,6 +20,12 @@
       and <a href="http://www.cs.wisc.edu/~dusseau/">Andrea Arpaci-Dusseau</a>
     </li>
     <li><a href="https://cs111-ucla.slack.com">Slack</a></li>
+    {% if summer21_midterm %}
+    <li><a href="{{ summer21_midterm.file.url }}">Summer '21 Midterm</a></li>
+    {% endif %}
+    {% if summer21_midterm_solutions %}
+    <li><a href="{{ summer21_midterm_solutions.file.url }}">Summer '21 Midterm Solutions</a></li>
+    {% endif %}
   </ul>
 </div>
 {% endblock %}

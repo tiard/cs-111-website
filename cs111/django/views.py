@@ -82,8 +82,19 @@ def resources(request):
         vm_no_gui = File.objects.get(file='cs111/vm-no-gui.ova')
     except File.DoesNotExist:
         vm_no_gui = None
+    try:
+        summer21_midterm = File.objects.get(file='cs111/summer21-midterm.pdf')
+    except File.DoesNotExist:
+        summer21_midterm = None
+    try:
+        summer21_midterm_solutions = File.objects.get(file='cs111/summer21-midterm-solutions.pdf')
+    except File.DoesNotExist:
+        summer21_midterm_solutions = None
+
     return render(request, 'cs111/resources.html', {
         'syllabus': syllabus,
         'vm': vm,
         'vm_no_gui': vm_no_gui,
+        'summer21_midterm': summer21_midterm,
+        'summer21_midterm_solutions': summer21_midterm_solutions,
     })
