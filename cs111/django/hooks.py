@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from django_gitolite.models import Repo
 from django_gitolite.utils import home_dir
 
-from cs111.django.models import Lab, LabGrade, Offering, Role, SubmissionStatus, UpstreamStatus
+from cs111.django.models import Lab, LabGrade, MidtermGrade, Offering, Role, SubmissionStatus, UpstreamStatus
 
 logger = logging.getLogger(__name__)
 
@@ -43,13 +43,13 @@ def update_grades(push):
             try:
                 user = User.objects.get(username=username)
             except User.DoesNotExist:
-                print(f'{username} user does not exist (skipping)')
+                print(f'{username} user does not exist (skipping - lab{n})')
                 continue
 
             try:
                 student = user.role
             except:
-                print(f'{username} student does not exist (skipping)')
+                print(f'{username} student does not exist (skipping - lab{n})')
                 continue
 
             lab_grade, created = LabGrade.objects.get_or_create(
@@ -67,6 +67,37 @@ def update_grades(push):
                 lab_grade.late_days = late_days
                 lab_grade.grade = grade
                 lab_grade.save()
+
+    # Update midterm grade
+    result = subprocess.run(sudo_cmd + ['git', 'show', f'{push.new_rev}:midterm-grades.csv'], cwd=git_path, capture_output=True, text=True)
+    if result.returncode == 0:
+        reader = csv.reader(result.stdout.splitlines())
+        for row in reader:
+            username = row[0]
+            grade = row[1]
+
+            try:
+                user = User.objects.get(username=username)
+            except User.DoesNotExist:
+                print(f'{username} user does not exist (skipping midterm)')
+                continue
+
+            try:
+                student = user.role
+            except:
+                print(f'{username} student does not exist (skipping midterm)')
+                continue
+
+            midterm_grade, created = MidtermGrade.objects.get_or_create(
+                offering=offering,
+                student=student,
+                defaults={
+                    'grade': grade,
+                },
+            )
+            if not created:
+                midterm_grade.grade = grade
+                midterm_grade.save()
 
 def update_status(push):
     offering_slug = settings.CS111_OFFERING
