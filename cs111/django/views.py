@@ -105,4 +105,6 @@ def resources(request):
         'vm_no_gui': vm_no_gui,
         'summer21_midterm': summer21_midterm,
         'summer21_midterm_solutions': summer21_midterm_solutions,
+        'fall21_midterm': fall21_midterm,
+        'fall21_midterm_solutions': fall21_midterm_solutions,
     })
