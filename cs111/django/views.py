@@ -91,6 +91,14 @@ def resources(request):
     except File.DoesNotExist:
         summer21_midterm_solutions = None
     try:
+        summer21_final = File.objects.get(file='cs111/summer21-final.pdf')
+    except File.DoesNotExist:
+        summer21_final = None
+    try:
+        summer21_final_solutions = File.objects.get(file='cs111/summer21-final-solutions.pdf')
+    except File.DoesNotExist:
+        summer21_final_solutions = None
+    try:
         fall21_midterm = File.objects.get(file='cs111/fall21-midterm.pdf')
     except File.DoesNotExist:
         fall21_midterm = None
@@ -105,6 +113,8 @@ def resources(request):
         'vm_no_gui': vm_no_gui,
         'summer21_midterm': summer21_midterm,
         'summer21_midterm_solutions': summer21_midterm_solutions,
+        'summer21_final': summer21_final,
+        'summer21_final_solutions': summer21_final_solutions,
         'fall21_midterm': fall21_midterm,
         'fall21_midterm_solutions': fall21_midterm_solutions,
     })
