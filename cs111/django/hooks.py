@@ -99,6 +99,99 @@ def update_grades(push):
                 midterm_grade.grade = grade
                 midterm_grade.save()
 
+    # Update evaluation grade
+    result = subprocess.run(sudo_cmd + ['git', 'show', f'{push.new_rev}:evaluation-grades.csv'], cwd=git_path, capture_output=True, text=True)
+    if result.returncode == 0:
+        reader = csv.reader(result.stdout.splitlines())
+        for row in reader:
+            username = row[0]
+            grade = row[1]
+
+            try:
+                user = User.objects.get(username=username)
+            except User.DoesNotExist:
+                print(f'{username} user does not exist (skipping evaluation)')
+                continue
+
+            try:
+                student = user.role
+            except:
+                print(f'{username} student does not exist (skipping evaluation)')
+                continue
+
+            evaluation_grade, created = EvaluationGrade.objects.get_or_create(
+                offering=offering,
+                student=student,
+                defaults={
+                    'grade': grade,
+                },
+            )
+            if not created:
+                evaluation_grade.grade = grade
+                evaluation_grade.save()
+
+    # Update final grade
+    result = subprocess.run(sudo_cmd + ['git', 'show', f'{push.new_rev}:final-grades.csv'], cwd=git_path, capture_output=True, text=True)
+    if result.returncode == 0:
+        reader = csv.reader(result.stdout.splitlines())
+        for row in reader:
+            username = row[0]
+            grade = row[1]
+
+            try:
+                user = User.objects.get(username=username)
+            except User.DoesNotExist:
+                print(f'{username} user does not exist (skipping final)')
+                continue
+
+            try:
+                student = user.role
+            except:
+                print(f'{username} student does not exist (skipping final)')
+                continue
+
+            final_grade, created = FinalExamGrade.objects.get_or_create(
+                offering=offering,
+                student=student,
+                defaults={
+                    'grade': grade,
+                },
+            )
+            if not created:
+                final_grade.grade = grade
+                final_grade.save()
+
+    # Update course grade
+    result = subprocess.run(sudo_cmd + ['git', 'show', f'{push.new_rev}:course-grades.csv'], cwd=git_path, capture_output=True, text=True)
+    if result.returncode == 0:
+        reader = csv.reader(result.stdout.splitlines())
+        for row in reader:
+            username = row[0]
+            grade = row[1]
+
+            try:
+                user = User.objects.get(username=username)
+            except User.DoesNotExist:
+                print(f'{username} user does not exist (skipping course)')
+                continue
+
+            try:
+                student = user.role
+            except:
+                print(f'{username} student does not exist (skipping course)')
+                continue
+
+            course_grade, created = CourseGrade.objects.get_or_create(
+                offering=offering,
+                student=student,
+                defaults={
+                    'grade': grade,
+                },
+            )
+            if not created:
+                course_grade.grade = grade
+                course_grade.save()
+
 def update_status(push):
     offering_slug = settings.CS111_OFFERING
     offering = Offering.objects.get(slug=offering_slug)
