@@ -82,47 +82,59 @@ class LabGrade(models.Model):
         return f'{self.student} - {self.lab} - Grade: {self.grade} - Late Days: {self.late_days}'
 
     class Meta:
-        unique_together = ['student', 'lab']
+        unique_together = ['offering', 'student', 'lab']
 
 class MidtermGrade(models.Model):
     offering = models.ForeignKey(Offering, on_delete=models.CASCADE,
                                  related_name='midterm_grades')
-    student = models.OneToOneField(Role, on_delete=models.CASCADE,
-                                   related_name='midterm_grade')
+    student = models.ForeignKey(Role, on_delete=models.CASCADE,
+                                related_name='midterm_grades')
     grade = models.FloatField()
 
     def __str__(self):
         return f'{self.student} - Grade: {self.grade}'
+
+    class Meta:
+        unique_together = ['offering', 'student']
 
 class FinalExamGrade(models.Model):
     offering = models.ForeignKey(Offering, on_delete=models.CASCADE,
                                  related_name='final_exam_grades')
-    student = models.OneToOneField(Role, on_delete=models.CASCADE,
-                                   related_name='final_exam_grade')
+    student = models.ForeignKey(Role, on_delete=models.CASCADE,
+                                related_name='final_exam_grades')
     grade = models.FloatField()
 
     def __str__(self):
         return f'{self.student} - Grade: {self.grade}'
+
+    class Meta:
+        unique_together = ['offering', 'student']
 
 class EvaluationGrade(models.Model):
     offering = models.ForeignKey(Offering, on_delete=models.CASCADE,
                                  related_name='evaluation_grades')
-    student = models.OneToOneField(Role, on_delete=models.CASCADE,
-                                   related_name='evaluation_grade')
+    student = models.ForeignKey(Role, on_delete=models.CASCADE,
+                                related_name='evaluation_grades')
     grade = models.FloatField()
 
     def __str__(self):
         return f'{self.student} - Grade: {self.grade}'
+
+    class Meta:
+        unique_together = ['offering', 'student']
 
 class CourseGrade(models.Model):
     offering = models.ForeignKey(Offering, on_delete=models.CASCADE,
                                  related_name='course_grades')
-    student = models.OneToOneField(Role, on_delete=models.CASCADE,
-                                   related_name='course_grade')
+    student = models.ForeignKey(Role, on_delete=models.CASCADE,
+                                related_name='course_grades')
     grade = models.FloatField()
 
     def __str__(self):
         return f'{self.student} - Grade: {self.grade}'
+
+    class Meta:
+        unique_together = ['offering', 'student']
 
 class UpstreamStatus(models.Model):
     repo = models.OneToOneField(Repo, on_delete=models.CASCADE,
