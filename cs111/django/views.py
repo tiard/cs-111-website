@@ -106,6 +106,14 @@ def resources(request):
         fall21_midterm_solutions = File.objects.get(file='cs111/fall21-midterm-solutions.pdf')
     except File.DoesNotExist:
         fall21_midterm_solutions = None
+    try:
+        fall21_final = File.objects.get(file='cs111/fall21-final.pdf')
+    except File.DoesNotExist:
+        fall21_final = None
+    try:
+        fall21_final_solutions = File.objects.get(file='cs111/fall21-final-solutions.pdf')
+    except File.DoesNotExist:
+        fall21_final_solutions = None
 
     return render(request, 'cs111/resources.html', {
         'syllabus': syllabus,
@@ -117,4 +125,6 @@ def resources(request):
         'summer21_final_solutions': summer21_final_solutions,
         'fall21_midterm': fall21_midterm,
         'fall21_midterm_solutions': fall21_midterm_solutions,
+        'fall21_final': fall21_final,
+        'fall21_final_solutions': fall21_final_solutions,
     })

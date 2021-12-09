@@ -38,6 +38,12 @@
     {% if fall21_midterm_solutions %}
     <li><a href="{{ fall21_midterm_solutions.file.url }}">Fall '21 Midterm Solutions</a></li>
     {% endif %}
+    {% if fall21_final %}
+    <li><a href="{{ fall21_final.file.url }}">Fall '21 Final</a></li>
+    {% endif %}
+    {% if fall21_final_solutions %}
+    <li><a href="{{ fall21_final_solutions.file.url }}">Fall '21 Final Solutions</a></li>
+    {% endif %}
   </ul>
 </div>
 {% endblock %}
