@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from django_gitolite.models import Repo
 from django_gitolite.utils import home_dir
 
-from cs111.django.models import Lab, LabGrade, MidtermGrade, Offering, Role, SubmissionStatus, UpstreamStatus
+from cs111.django.models import Lab, LabGrade, MidtermGrade, EvaluationGrade, FinalExamGrade, CourseGrade, Offering, Role, SubmissionStatus, UpstreamStatus
 
 logger = logging.getLogger(__name__)
 
