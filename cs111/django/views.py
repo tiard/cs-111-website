@@ -32,32 +32,33 @@ def labs(request):
 def grades(request):
     user = request.user
     offering_slug = settings.CS111_OFFERING
+    offering = Offering.objects.get(slug=offering_slug)
     try:
         repo = Repo.objects.get(path=f'{offering_slug}/{user.username}/cs111')
     except Repo.DoesNotExist:
         repo = None
-    lab_grades = LabGrade.objects.filter(student__user=user).order_by('lab__number')
+    lab_grades = LabGrade.objects.filter(offering=offering, student__user=user).order_by('lab__number')
     midterm_grade = None
     try:
-        midterm_grade = MidtermGrade.objects.get(student__user=user)
+        midterm_grade = MidtermGrade.objects.get(offering=offering, student__user=user)
     except Exception as e:
         pass
 
     final_exam_grade = None
     try:
-        final_exam_grade = FinalExamGrade.objects.get(student__user=user)
+        final_exam_grade = FinalExamGrade.objects.get(offering=offering, student__user=user)
     except Exception as e:
         pass
 
     evaluation_grade = None
     try:
-        evaluation_grade = EvaluationGrade.objects.get(student__user=user)
+        evaluation_grade = EvaluationGrade.objects.get(offering=offering, student__user=user)
     except Exception as e:
         pass
 
     course_grade = None
     try:
-        course_grade = CourseGrade.objects.get(student__user=user)
+        course_grade = CourseGrade.objects.get(offering=offering, student__user=user)
     except Exception as e:
         pass
     return render(request, 'cs111/grades.html', {
