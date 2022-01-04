@@ -11,7 +11,7 @@ class LecturesView(generic.ListView):
     context_object_name = 'lectures'
 
     def get_queryset(self):
-        offering = Offering.objects.get(slug=settings.CS111_OFFERING)
+        offering = Offering.objects.get(slug='fall21')
         return Lecture.objects.filter(offering=offering).order_by('number')
 
 class LabsView(generic.ListView):
