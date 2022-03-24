@@ -11,7 +11,7 @@ def css(options):
     static_dir = BASE_DIR / 'cs111' / 'django' / 'static' / 'css'
     os.makedirs(static_dir, exist_ok=True)
     static_path = static_dir / 'cs111.css'
-    subprocess.run(['sass', '--sourcemap=none', sass_path, static_path],
+    subprocess.run(['sass', '--no-source-map', sass_path, static_path],
                    cwd=BASE_DIR)
 
 def favicon(options):
