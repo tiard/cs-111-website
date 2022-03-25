@@ -31,7 +31,7 @@ Please find your login information for https://laforge.cs.ucla.edu/cs111/ below.
 
 I'm looking forward to this quarter!
 
-Jon''',
+Peter Reiher''',
         None,
         [email],
         fail_silently=False,
@@ -66,7 +66,7 @@ If you need to reset your password please use https://laforge.cs.ucla.edu/cs111/
 
 I'm looking forward to this quarter!
 
-Jon''',
+Peter Reiher''',
         None,
         [email],
         fail_silently=False,

@@ -94,4 +94,4 @@ GITOLITE_HOOKS = (
 	'cs111.django.hooks.update_status',
 )
 
-CS111_OFFERING = 'fall21'
+CS111_OFFERING = 'spring22'
