@@ -1,7 +1,7 @@
-asgiref==3.4.1
-Django==3.2.7
-django-cleanup==5.2.0
+asgiref==3.5.0
+Django==4.0.3
+django-cleanup==6.0.0
 django-gitolite==0.2.2
 django-ssh==0.2.3
-pytz==2021.1
+pytz==2022.1
 sqlparse==0.4.2
