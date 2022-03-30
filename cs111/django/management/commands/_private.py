@@ -24,14 +24,14 @@ def add_user(username, email, first_name, last_name, role, ucla_id=None):
         '[cs111] Welcome to Operating System Principles!',
         f'''Hi {first_name},
 
-Please find your login information for https://laforge.cs.ucla.edu/cs111/ below.
+Please find your login information for https://sefer.cs.ucla.edu below.
 
     Username: {username}
     Password: {password}
 
 I'm looking forward to this quarter!
 
-Peter Reiher''',
+Alex''',
         None,
         [email],
         fail_silently=False,
@@ -58,15 +58,15 @@ def update_user(username, ucla_id):
         '[cs111] Welcome to Operating System Principles!',
         f'''Hi {first_name},
 
-You already have a login for https://laforge.cs.ucla.edu/cs111/.
+You already have a login for https://sefer.cs.ucla.edu.
 
     Username: {username}
 
-If you need to reset your password please use https://laforge.cs.ucla.edu/cs111/accounts/password_reset/ with this email address.
+If you need to reset your password please use https://sefer.cs.ucla.edu/accounts/password_reset/ with this email address.
 
 I'm looking forward to this quarter!
 
-Peter Reiher''',
+Alex''',
         None,
         [email],
         fail_silently=False,

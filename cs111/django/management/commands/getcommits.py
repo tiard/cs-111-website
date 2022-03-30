@@ -25,7 +25,7 @@ class Command(BaseCommand):
         lab = Lab.objects.get(offering=offering, number=options['lab_number'])
 
         upstream_commits = set()
-        path = f'{offering.slug}/rcaygun/cs111'
+        path = f'{offering.slug}/atiard/cs111'
         git_repo = pygit2.Repository(
             os.path.join(home_dir(), 'repositories', '{}.git'.format(path))
         )

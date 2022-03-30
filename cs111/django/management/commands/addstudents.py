@@ -69,7 +69,7 @@ class Command(BaseCommand):
                    continue
                else:
                    assert not Role.objects.filter(ucla_id=ucla_id).exists()
-                   self.stdout.write(self.style.NOTICE(f'Conflict with student "{username}" ({ulca_id})'))
+                   self.stdout.write(self.style.NOTICE(f'Conflict with student "{username}" ({ucla_id})'))
 
             assert username not in usernames
             usernames.add(username)
