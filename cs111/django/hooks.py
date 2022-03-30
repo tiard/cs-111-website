@@ -198,7 +198,7 @@ def update_status(push):
 
     repo = push.repo
     repo_path = repo.path
-    upstream_repo_path = f'{offering_slug}/rcaygun/cs111'
+    upstream_repo_path = f'{offering_slug}/atiard/cs111'
     if repo_path == upstream_repo_path:
         for role in Role.objects.filter(offering=offering, role=Role.STUDENT):
             username = role.user.username
@@ -214,7 +214,7 @@ def update_status(push):
                 upstream_status.save()
         return
 
-    if repo_path == f'{offering_slug}/rcaygun/cs111-grades' and push.refname == 'refs/heads/main':
+    if repo_path == f'{offering_slug}/atiard/cs111-grades' and push.refname == 'refs/heads/main':
         update_grades(push)
         return
 
