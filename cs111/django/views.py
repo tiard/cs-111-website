@@ -84,7 +84,7 @@ def resources(request):
     except File.DoesNotExist:
         vm_no_gui = None
     try:
-        m1_instructions = File.objects.get(file='cs111/m1_instructions.ova')
+        m1_instructions = File.objects.get(file='cs111/m1_instructions.pdf')
     except File.DoesNotExist:
         m1_instructions = None
     try:
