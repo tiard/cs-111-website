@@ -84,6 +84,10 @@ def resources(request):
     except File.DoesNotExist:
         vm_no_gui = None
     try:
+        m1_instructions = File.objects.get(file='cs111/m1_instructions.ova')
+    except File.DoesNotExist:
+        m1_instructions = None
+    try:
         summer21_midterm = File.objects.get(file='cs111/summer21-midterm.pdf')
     except File.DoesNotExist:
         summer21_midterm = None
@@ -120,6 +124,7 @@ def resources(request):
         'syllabus': syllabus,
         'vm': vm,
         'vm_no_gui': vm_no_gui,
+        'm1_instructions': m1_instructions,
         'summer21_midterm': summer21_midterm,
         'summer21_midterm_solutions': summer21_midterm_solutions,
         'summer21_final': summer21_final,

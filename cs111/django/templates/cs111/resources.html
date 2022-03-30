@@ -14,6 +14,9 @@
     {% if vm_no_gui %}
     <li><a href="{{ vm_no_gui.file.url }}">Virtual machine (no GUI)</a></li>
     {% endif %}
+    {% if m1_instructions %}
+    <li><a href="{{ m1_instructions.file.url }}">Virtual machine instructions for M1 Macs</a></li>
+    {% endif %}
     <li>
       "<a href="https://pages.cs.wisc.edu/~remzi/OSTEP/">Operating Systems: Three Easy Pieces</a>"
       by <a href="http://www.cs.wisc.edu/~remzi/">Remzi Arpaci-Dusseau</a>
